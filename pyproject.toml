@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "alembic-test-project"
+version = "0.1.0"
+description = "Proof of concept using Postgresql, SQLAlchemy, SQLModel, FastAPI and Alembic"
+authors = ["Mouad Kommir <mouadkommir@gmail.com>"]
+readme = "README.md"
+package-mode = false
+# packages = [{include = "poetry_demo"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+psycopg2-binary = "^2.9.10"
+sqlalchemy = "^2.0.36"
+fastapi = "^0.115.6"
+sqlmodel = "^0.0.22"
+uvicorn = "^0.34.0"
+pydantic = "^2.10.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

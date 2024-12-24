@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "name": "UltraBook Pro 15",
+    "price": 1200,
+    "description": "A sleek ultrabook with excellent performance for professionals.",
+    "technical_properties": {
+      "CPU": "Intel Core i7-1255U",
+      "RAM": "16GB DDR4",
+      "GPU": "Intel Iris Xe",
+      "Storage": "512GB SSD",
+      "Screen Size": "15.6 inches",
+      "Battery Life": "10 hours"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Gaming Laptop X15",
+    "price": 1500,
+    "description": "High-performance gaming laptop with advanced cooling system.",
+    "technical_properties": {
+      "CPU": "AMD Ryzen 7 5800H",
+      "RAM": "16GB DDR4",
+      "GPU": "NVIDIA RTX 3060",
+      "Storage": "1TB SSD",
+      "Screen Size": "15.6 inches",
+      "Refresh Rate": "144Hz"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Smartphone Z20",
+    "price": 700,
+    "description": "Compact smartphone with excellent camera and performance.",
+    "technical_properties": {
+      "CPU": "Snapdragon 888",
+      "RAM": "8GB",
+      "Storage": "128GB",
+      "Screen Size": "6.2 inches",
+      "Battery": "4000mAh",
+      "Camera": "108MP + 12MP + 8MP"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Smartwatch Fit X",
+    "price": 250,
+    "description": "Fitness-focused smartwatch with long battery life.",
+    "technical_properties": {
+      "Screen Size": "1.4 inches",
+      "Battery Life": "7 days",
+      "Sensors": "Heart Rate, SpO2, GPS",
+      "Water Resistance": "5 ATM"
+    }
+  },
+  {
+    "id": 5,
+    "name": "Wireless Earbuds S1",
+    "price": 100,
+    "description": "Compact and high-quality wireless earbuds with noise cancellation.",
+    "technical_properties": {
+      "Battery Life": "5 hours (20 hours with case)",
+      "Noise Cancellation": "Active",
+      "Bluetooth": "5.2",
+      "Water Resistance": "IPX4"
+    }
+  },
+  {
+    "id": 6,
+    "name": "4K Smart TV 55",
+    "price": 600,
+    "description": "55-inch 4K Smart TV with vibrant colors and streaming support.",
+    "technical_properties": {
+      "Screen Size": "55 inches",
+      "Resolution": "4K UHD",
+      "HDR": "HDR10+",
+      "Ports": "3 HDMI, 2 USB",
+      "Smart Features": "Built-in apps, voice control"
+    }
+  },
+  {
+    "id": 7,
+    "name": "Bluetooth Speaker Boom X",
+    "price": 80,
+    "description": "Portable Bluetooth speaker with powerful bass.",
+    "technical_properties": {
+      "Battery Life": "10 hours",
+      "Bluetooth": "5.0",
+      "Water Resistance": "IP67",
+      "Output Power": "20W"
+    }
+  },
+  {
+    "id": 8,
+    "name": "External SSD Pro 1TB",
+    "price": 150,
+    "description": "High-speed portable SSD with durable design.",
+    "technical_properties": {
+      "Storage": "1TB",
+      "Read Speed": "1050MB/s",
+      "Write Speed": "1000MB/s",
+      "Interface": "USB-C 3.2",
+      "Weight": "50g"
+    }
+  },
+  {
+    "id": 9,
+    "name": "Mechanical Keyboard K100",
+    "price": 120,
+    "description": "Customizable mechanical keyboard with RGB lighting.",
+    "technical_properties": {
+      "Switch Type": "Cherry MX Red",
+      "Keycaps": "PBT Double-shot",
+      "Connectivity": "Wired USB",
+      "Lighting": "RGB",
+      "Layout": "Full-size"
+    }
+  },
+  {
+    "id": 10,
+    "name": "Gaming Mouse G10",
+    "price": 50,
+    "description": "Ergonomic gaming mouse with adjustable DPI settings.",
+    "technical_properties": {
+      "DPI Range": "400-12000",
+      "Buttons": "6 programmable",
+      "Connectivity": "Wired USB",
+      "Weight": "85g",
+      "Lighting": "RGB"
+    }
+  }
+]

@@ -1,0 +1,3 @@
+*.pyc
+.null-ls
+venv
