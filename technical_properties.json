@@ -1,0 +1,96 @@
+[
+  {
+    "technical_properties": {
+      "CPU": "Intel Core i7-1255U",
+      "CPU": "AMD Ryzen 7 5800H",
+      "CPU": "Snapdragon 888",
+
+      "RAM": "16GB DDR4",
+      "RAM": "16GB DDR4",
+      "RAM": "8GB",
+
+      "GPU": "Intel Iris Xe",
+      "GPU": "NVIDIA RTX 3060",
+
+      "Storage": "512GB SSD",
+      "Storage": "1TB SSD",
+      "Storage": "128GB",
+      "Storage": "1TB",
+
+      "Screen Size": "15.6 inches",
+      "Screen Size": "15.6 inches",
+      "Screen Size": "6.2 inches",
+      "Screen Size": "1.4 inches",
+      "Screen Size": "55 inches",
+
+      "Resolution": "4K UHD",
+
+      "Battery Life": "10 hours",
+      "Battery Life": "7 days",
+      "Battery Life": "5 hours (20 hours with case)",
+      "Battery Life": "10 hours",
+
+      "Water Resistance": "5 ATM",
+      "Water Resistance": "IP67",
+      "Water Resistance": "IPX4",
+
+      "Bluetooth": "5.2",
+      "Bluetooth": "5.0",
+
+      "Weight": "50g",
+      "Weight": "85g",
+
+      "Battery": "4000mAh",
+      "Refresh Rate": "144Hz",
+      "Camera": "108MP + 12MP + 8MP",
+      "Sensors": "Heart Rate, SpO2, GPS",
+      "Noise Cancellation": "Active",
+      "HDR": "HDR10+",
+      "Ports": "3 HDMI, 2 USB",
+      "Smart Features": "Built-in apps, voice control",
+      "Output Power": "20W",
+      "Read Speed": "1050MB/s",
+      "Write Speed": "1000MB/s",
+      "Interface": "USB-C 3.2",
+      "Switch Type": "Cherry MX Red",
+      "Keycaps": "PBT Double-shot",
+      "Connectivity": "Wired USB",
+      "Lighting": "RGB",
+      "Layout": "Full-size",
+      "DPI Range": "400-12000",
+      "Buttons": "6 programmable"
+    }
+  },
+  {
+    "technical_properties_names": [
+      "CPU",
+      "RAM",
+      "GPU",
+      "Storage",
+      "Screen Size",
+      "Resolution",
+      "Battery Life",
+      "Water Resistance",
+      "Bluetooth",
+      "Weight",
+      "Battery",
+      "Refresh Rate",
+      "Camera",
+      "Sensors",
+      "Noise Cancellation",
+      "HDR",
+      "Ports",
+      "Smart Features",
+      "Output Power",
+      "Read Speed",
+      "Write Speed",
+      "Interface",
+      "Switch Type",
+      "Keycaps",
+      "Connectivity",
+      "Lighting",
+      "Layout",
+      "DPI Range",
+      "Buttons"
+  }
+]

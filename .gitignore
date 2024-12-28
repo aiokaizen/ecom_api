@@ -1,3 +1,4 @@
 *.pyc
 .null-ls
+.env
 venv

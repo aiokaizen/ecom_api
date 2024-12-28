@@ -1,7 +1,11 @@
+from typing import List
 from fastapi import FastAPI
 import json
 
 from app.serializers import Product
+from app.serializers.product_serializers import ProductListSerializer
+from app.services.product_services import filter_products, get_product
+from faslava.logging.logging_manager import logger
 
 app = FastAPI()
 
@@ -16,31 +20,27 @@ async def health_check():
     return {"status": "OK"}
 
 
-@app.get("/products/")
+@app.get("/products/", response_model=List[Product])
 async def list_products(skip: int = 0, limit: int = 10):  # Query params
-    mock_data_count = len(mock_data)
-    limit = limit if limit <= mock_data_count else mock_data_count
     try:
-        return mock_data[skip : skip + limit]
-    except IndexError:
-        return mock_data[:limit]
+        print("skip:", skip, "| limit:", limit)
+        products = filter_products()
+        return products
+    except Exception as e:
+        logger.error("Unexpected error:", e)
 
 
 @app.get("/products/{product_id}")
 async def read_product(product_id: int):
     try:
-        product = [p for p in mock_data if p["id"] == product_id][0]
-    except IndexError:
-        return {"ERROR! Product not found."}
-    return product
+        product = get_product(product_id)
+        return product
+    except Exception as e:
+        logger.error("Unexpected error:", e)
+        raise e
 
 
 @app.post("/products/")
-async def create_item(product: Product):
-    mock_data.append(product.model_dump())
+async def create_product(product: Product):
+    product = await create_product(product)
     return product
-
-
-@app.get("/files/{file_path:path}")
-async def read_file(file_path: str):
-    return {"file_path": file_path}
