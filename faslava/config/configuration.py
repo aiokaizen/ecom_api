@@ -37,6 +37,7 @@ class Settings(BaseSettings):
     DB_PWD: str = ""
     DB_PORT: int = 0
     DB_ENGINE: str
+    ALEMBIC_CUSTOM_SCHEMA: str = "almbc"
 
     def build_db_url(self):
         if self.DB_ENGINE not in SUPPORTED_DATABASE_BACKENDS:

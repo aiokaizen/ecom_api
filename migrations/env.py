@@ -10,15 +10,11 @@ from sqlmodel import SQLModel
 from faslava.config.configuration import settings
 from app.models import *
 
-# Set database url env variable
-
-# db_url = "postgresql://alembic:admin_pass@localhost:5432/alembic"
-db_url = settings.build_db_url()
-
 # this is the Alembic Config object, which provides
-# access to the values within the .ini file in use.
+# access to the values within the alembic.ini file in use.
 config = context.config
 
+db_url = settings.build_db_url()
 config.set_main_option("sqlalchemy.url", db_url)
 
 # Interpret the config file for Python logging.
@@ -36,6 +32,17 @@ target_metadata = SQLModel.metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+
+
+def include_object(obj, name, type_, reflected, compare_to):
+    if (
+        (type_ == "schema" and obj != settings.ALEMBIC_CUSTOM_SCHEMA)
+        | (type_ == "table" and obj.schema != settings.ALEMBIC_CUSTOM_SCHEMA)
+        | (type_ == "column" and obj.table.schema != settings.ALEMBIC_CUSTOM_SCHEMA)
+    ):
+        print(f"Wrong schema for {type_}: {obj}")
+        return False
+    return True
 
 
 def run_migrations_offline() -> None:
@@ -76,7 +83,12 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata)
+        context.configure(
+            connection=connection,
+            target_metadata=target_metadata,
+            include_object=include_object,
+            include_schemas=True,
+        )
 
         with context.begin_transaction():
             context.run_migrations()

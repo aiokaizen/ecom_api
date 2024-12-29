@@ -1,33 +1,35 @@
-from sqlmodel import Field, Session, SQLModel
+from sqlalchemy import Column
+from sqlalchemy.types import String
+from sqlmodel import Field
 from typing import Optional
 from decimal import Decimal
 
 from enums.enums import TechnicalPropertyEnum
+from faslava.config.configuration import settings
 from faslava.models import BaseModel
 from faslava.core.utils import gettext_lazy as _
 
 
-class BaseAlembicSchemaModel(BaseModel):
-    # Define the almbc schema for child models:
-    # __table_args__ = {"schema": "almbc"}  # Specify the schema
-    pass
-
-
-class TechnicalProperty(BaseAlembicSchemaModel, table=True):
+class TechnicalProperty(BaseModel, table=True):
     """Primary Product table."""
 
     __tablename__ = "technical_properties"
+    __table_args__ = {"schema": settings.ALEMBIC_CUSTOM_SCHEMA}
 
     id: Optional[int] = Field(primary_key=True, description=_("ID"))
-    product_id: int = Field(description="Product ID", foreign_key="product.id")
-    name: TechnicalPropertyEnum = Field(description=_("Name"))
+    product_id: int = Field(description="Product ID", foreign_key=f"almbc.product.id")
+    name: TechnicalPropertyEnum = Field(
+        description=_("Name"), sa_column=Column(String(length=25))
+    )
     value: str = Field(description=_("Value"))
+    # xvalue: str = Field(description=_("Value"))
 
 
-class Product(BaseAlembicSchemaModel, table=True):
+class Product(BaseModel, table=True):
     """Primary Product table."""
 
     __tablename__ = "product"
+    __table_args__ = {"schema": settings.ALEMBIC_CUSTOM_SCHEMA}
 
     id: Optional[int] = Field(primary_key=True, description=_("ID"))
     name: str = Field(max_length=256, description=_("Name"))
