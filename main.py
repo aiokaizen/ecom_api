@@ -11,7 +11,7 @@ app = FastAPI()
 
 
 mock_data = None
-with open("data.json", "r") as f:
+with open("seeding_data.json", "r") as f:
     mock_data = json.load(f)
 
 

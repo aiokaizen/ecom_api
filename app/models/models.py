@@ -22,7 +22,6 @@ class TechnicalProperty(BaseModel, table=True):
         description=_("Name"), sa_column=Column(String(length=25))
     )
     value: str = Field(description=_("Value"))
-    # xvalue: str = Field(description=_("Value"))
 
 
 class Product(BaseModel, table=True):
@@ -36,3 +35,10 @@ class Product(BaseModel, table=True):
     price: Decimal = Field(decimal_places=2, max_digits=11, description=_("Price"))
     description: Optional[str] = Field(default="", description=_("Description"))
     technical_properties: str = Field(default="", description=_("Technical Properties"))
+
+
+# class Command(BaseModel, table=True):
+#     """Primary Product table."""
+#
+#     __tablename__ = "command"
+#     __table_args__ = {"schema": settings.ALEMBIC_CUSTOM_SCHEMA}

@@ -43,11 +43,14 @@ class Settings(BaseSettings):
         if self.DB_ENGINE not in SUPPORTED_DATABASE_BACKENDS:
             raise Exception("Database engine is not supported.")
 
+        print("DB_ENDING:", self.DB_ENGINE)
+        print("IS PSQL:", self.DB_ENGINE == "postgresql")
         if self.DB_ENGINE == "postgresql":
             backend = SUPPORTED_DATABASE_BACKENDS["postgresql"]
             url_pwd_string = f":{self.DB_PWD}" if self.DB_PWD else ""
             return f"postgresql://{self.DB_USER}{url_pwd_string}@{self.DB_HOST}:{self.DB_PORT or backend.default_port}/{self.DB_NAME}"
 
+        print("IS SQLITE:", self.DB_ENGINE == "sqlite")
         if self.DB_ENGINE == "sqlite":
             return f"sqlite:///{self.DB_NAME}"
 

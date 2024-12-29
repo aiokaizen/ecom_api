@@ -2,3 +2,4 @@
 .null-ls
 .env
 venv
+database.db
