@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from faslava.enums.enums import EnvEnum
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -18,6 +18,9 @@ SUPPORTED_DATABASE_BACKENDS = {
 
 
 class Settings(BaseSettings):
+    """
+    A settings class containing the application configuration.
+    """
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -48,3 +51,6 @@ class Settings(BaseSettings):
             return f"sqlite:///{self.DB_NAME}"
 
         raise Exception("Database backend not supported!")
+
+
+settings = Settings()

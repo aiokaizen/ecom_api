@@ -7,9 +7,19 @@ from alembic import context
 
 from sqlmodel import SQLModel
 
+from faslava.config.configuration import settings
+from app.models import *
+
+# Set database url env variable
+
+# db_url = "postgresql://alembic:admin_pass@localhost:5432/alembic"
+db_url = settings.build_db_url()
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+
+config.set_main_option("sqlalchemy.url", db_url)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
