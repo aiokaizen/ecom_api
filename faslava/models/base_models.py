@@ -1,16 +1,23 @@
-from typing import Any, List, Sequence
-from sqlmodel import SQLModel
-from collections.abc import Iterable
+from datetime import datetime, timezone
+from typing import Optional
+from sqlalchemy import Column, DateTime, func
+from sqlmodel import Field, SQLModel
 
-from faslava.serializers.serializers import BaseSerializer
+from faslava.core.utils import gettext_lazy as _
 
 
 class BaseModel(SQLModel):
     """BaseModel for all the database classes."""
 
-    def serialize(self, data: Any, serializer: BaseSerializer) -> BaseSerializer:
-        if not isinstance(data, Iterable):
-            return serializer(**data.model_dump())
+    pass
 
-        for obj in data:
-            return serializer(**obj.model_dump())
+    created_at: datetime = Field(
+        default_factory=(lambda: datetime.now(timezone.utc)),
+        description=_("Created at"),
+    )
+    updated_at: Optional[datetime] = Field(
+        default=None,
+        description=_("Updated at"),
+        # sa_column=Column(DateTime(), onupdate=func.now()),  # Find out why this does not work!!
+    )
+    deleted_at: Optional[datetime] = Field(default=None, description=_("Deleted at"))

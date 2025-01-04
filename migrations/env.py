@@ -34,15 +34,14 @@ target_metadata = SQLModel.metadata
 # ... etc.
 
 
-def include_object(obj, name, type_, reflected, compare_to):
-    if (
-        (type_ == "schema" and obj != settings.ALEMBIC_CUSTOM_SCHEMA)
-        | (type_ == "table" and obj.schema != settings.ALEMBIC_CUSTOM_SCHEMA)
-        | (type_ == "column" and obj.table.schema != settings.ALEMBIC_CUSTOM_SCHEMA)
-    ):
-        print(f"Wrong schema for {type_}: {obj}")
-        return False
-    return True
+def include_name(name, type_, parent_names):
+    if type_ == "schema" and name == settings.ALEMBIC_CUSTOM_SCHEMA:
+        return True
+
+    if parent_names.get("schema_name") == settings.ALEMBIC_CUSTOM_SCHEMA:
+        return True
+
+    return False
 
 
 def run_migrations_offline() -> None:
@@ -86,8 +85,8 @@ def run_migrations_online() -> None:
         context.configure(
             connection=connection,
             target_metadata=target_metadata,
-            include_object=include_object,
             include_schemas=True,
+            include_name=include_name,
         )
 
         with context.begin_transaction():

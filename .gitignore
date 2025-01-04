@@ -1,4 +1,5 @@
 *.pyc
+faslava.log
 .null-ls
 .env
 venv

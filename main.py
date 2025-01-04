@@ -23,7 +23,6 @@ async def health_check():
 @app.get("/products/", response_model=List[Product])
 async def list_products(skip: int = 0, limit: int = 10):  # Query params
     try:
-        print("skip:", skip, "| limit:", limit)
         products = filter_products()
         return products
     except Exception as e:

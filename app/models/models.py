@@ -17,7 +17,7 @@ class TechnicalProperty(BaseModel, table=True):
     __table_args__ = {"schema": settings.ALEMBIC_CUSTOM_SCHEMA}
 
     id: Optional[int] = Field(primary_key=True, description=_("ID"))
-    product_id: int = Field(description="Product ID", foreign_key=f"almbc.product.id")
+    product_id: int = Field(description="Product ID", foreign_key="almbc.product.id")
     name: TechnicalPropertyEnum = Field(
         description=_("Name"), sa_column=Column(String(length=25))
     )

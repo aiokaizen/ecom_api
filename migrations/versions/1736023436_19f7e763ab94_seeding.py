@@ -1,8 +1,8 @@
 """seeding
 
-Revision ID: a05d3234e88b
-Revises: f0d170b4acd7
-Create Date: 2024-12-29 18:23:18.701385
+Revision ID: 19f7e763ab94
+Revises: e5d72af0a514
+Create Date: 2025-01-04 21:43:56.965782
 
 """
 
@@ -11,17 +11,18 @@ from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy.sql import delete
 import sqlmodel
-from sqlmodel import delete
 
 from faslava.config.database_manager import db_manager
+
 from app.models.models import Product, TechnicalProperty
 from app.services.product_services import create_product, create_technical_property
 
 
 # revision identifiers, used by Alembic.
-revision: str = "a05d3234e88b"
-down_revision: Union[str, None] = "f0d170b4acd7"
+revision: str = "19f7e763ab94"
+down_revision: Union[str, None] = "e5d72af0a514"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

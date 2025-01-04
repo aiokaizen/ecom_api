@@ -2,8 +2,11 @@ from collections.abc import Generator
 from contextlib import contextmanager
 from threading import Lock
 from sqlalchemy.orm import sessionmaker
+
 # from sqlalchemy.orm.session import Session
 from sqlmodel import Session, create_engine
+
+from faslava.config.configuration import settings
 
 
 class DatabaseManager:
@@ -20,7 +23,7 @@ class DatabaseManager:
 
         return cls._instance
 
-    def __init__(self, database_url: str = "sqlite:///database.db"):
+    def __init__(self, database_url):
         # Initialize the database engine and session maker only once
         if not hasattr(self, "_initialized"):
             self.engine = create_engine(database_url, echo=True)
@@ -39,7 +42,6 @@ class DatabaseManager:
             session.commit()
         except Exception as e:
             session.rollback()
-            print(f"Database error occurred: {e}")
             raise e
         finally:
             session.close()
@@ -49,4 +51,4 @@ class DatabaseManager:
     #     SQLModel.metadata.create_all(self.engine)
 
 
-db_manager = DatabaseManager()
+db_manager = DatabaseManager(settings.build_db_url())
