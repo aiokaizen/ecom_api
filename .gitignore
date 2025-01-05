@@ -4,3 +4,4 @@ faslava.log
 .env
 venv
 database.db
+.secret_key

@@ -1,4 +1,6 @@
 from pydantic import BaseModel
+from pydantic.fields import Field
+from faslava.core.utils import get_project_secret_key
 from faslava.enums.enums import EnvEnum
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -30,6 +32,7 @@ class Settings(BaseSettings):
     )
 
     DEBUG: bool
+    SECRET_KEY: str = Field(default=get_project_secret_key(), description="Secret Key")
     ENV: EnvEnum
     DB_NAME: str
     DB_HOST: str
