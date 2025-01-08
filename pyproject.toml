@@ -20,6 +20,7 @@ alembic = "^1.14.0"
 fastapi-contrib = "^0.2.11"
 python-jose = "^3.3.0"
 passlib = "^1.7.4"
+toml = "^0.10.2"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -30,3 +31,7 @@ darglint = "^1.8.1"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ar]
+env_file=".env"
+debug=true
