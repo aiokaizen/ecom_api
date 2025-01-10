@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 from pydantic.fields import Field
 from faslava.core.utils import get_project_secret_key
@@ -40,7 +41,13 @@ class Settings(BaseSettings):
     DB_PWD: str = ""
     DB_PORT: int = 0
     DB_ENGINE: str
+    ALLOWED_HOSTS: str = "*"
     ALEMBIC_CUSTOM_SCHEMA: str = "almbc"
+
+    def serialize_allowed_hosts(self, value: Optional[str] = None):
+        if value is None:
+            value = self.ALLOWED_HOSTS
+        return value.split(",")
 
     def build_db_url(self):
         if self.DB_ENGINE not in SUPPORTED_DATABASE_BACKENDS:
