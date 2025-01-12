@@ -5,7 +5,7 @@ from app.serializers import product_serializers
 from faslava.logging.logging_manager import logger
 from faslava.config.database_manager import db_manager
 
-from app.serializers import Product
+from app.models import Product
 from app.serializers.product_serializers import (
     ProductGetSerializer,
     ProductListSerializer,
