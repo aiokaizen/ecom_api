@@ -1,9 +1,7 @@
 from collections.abc import Generator
 from contextlib import contextmanager
 from threading import Lock
-from sqlalchemy.orm import sessionmaker
 
-# from sqlalchemy.orm.session import Session
 from sqlmodel import Session, create_engine
 
 from faslava.config.configuration import settings
@@ -38,8 +36,11 @@ class DatabaseManager:
         """
         session = Session(self.engine)
         try:
+            print("\n\nYielding a session....")
             yield session
+            print("\n\nSession exited.")
             session.commit()
+            print("\n\nSession comitted.")
         except Exception as e:
             session.rollback()
             raise e

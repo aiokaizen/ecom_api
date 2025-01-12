@@ -2,7 +2,6 @@ from enum import Enum
 
 
 class EnvEnum(str, Enum):
-
     DEV = "dev"
     QUAL = "qual"
     PRE_PROD = "pre-prod"
@@ -10,9 +9,14 @@ class EnvEnum(str, Enum):
 
 
 class CRUDOperationEnum(str, Enum):
-
     CREATE = "create"
     UPDATE = "update"
     DELETE = "delete"
     FILTER = "filter"
     SELECT_ONE = "select_one"
+
+
+class APIResponseStatusEnum(str, Enum):
+    SUCCESS = "success"
+    WARNING = "warning"
+    ERROR = "error"

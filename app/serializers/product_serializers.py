@@ -14,11 +14,11 @@ class ProductGetSerializer(BaseSerializer):
     name: str
     price: float
     description: str | None = None
-    technical_properties: dict
+    # technical_properties: dict
+    technical_properties: str
 
 
 class ProductCreateSerializer(BaseSerializer):
-
     _model = Product
 
     name: str

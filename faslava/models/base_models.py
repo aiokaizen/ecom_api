@@ -9,22 +9,19 @@ class BaseModel(SQLModel):
     """BaseModel for all the database classes."""
 
     created_at: datetime = Field(
-        sa_column=lambda: Column(
-            DateTime(timezone=True), server_default=text("CURRENT_TIMESTAMP")
-        ),
+        # default_factory=lambda: datetime.now(timezone.utc),
+        sa_type=DateTime,
+        sa_column_kwargs={"server_default": text("CURRENT_TIMESTAMP")},
         description=_("Created at"),
     )
     updated_at: Optional[datetime] = Field(
         default=None,
         description=_("Updated at"),
-        sa_column=lambda: Column(
-            DateTime(timezone=True),
-            onupdate=func.now(),
-            server_onupdate=text("CURRENT_TIMESTAMP"),
-        ),
+        sa_type=DateTime,
+        sa_column_kwargs={"server_onupdate": text("CURRENT_TIMESTAMP")},
     )
     deleted_at: Optional[datetime] = Field(
         default=None,
         description=_("Deleted at"),
-        sa_column=lambda: Column(DateTime(timezone=True)),
+        sa_type=DateTime,
     )
