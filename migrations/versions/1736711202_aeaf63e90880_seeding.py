@@ -36,8 +36,6 @@ def upgrade() -> None:
             print("Creating product:", product_dict["name"])
             product = Product(**product_dict)
             session.add(product)
-        # session.flush()
-        # session.commit()
 
 
 def downgrade() -> None:
@@ -47,3 +45,5 @@ def downgrade() -> None:
 
     with db_manager.session_scope() as session:
         product_ids = [product["id"] for product in product_data]
+        statement = sqlmodel.delete(Product).where(Product.id.in_(product_ids))
+        session.exec(statement)
