@@ -1,4 +1,3 @@
-from app.models.models import Product
 from faslava.serializers.serializers import BaseSerializer
 
 
@@ -18,10 +17,7 @@ class ProductGetSerializer(BaseSerializer):
 
 
 class ProductCreateSerializer(BaseSerializer):
-
-    _model = Product
-
     name: str
     price: float
     description: str | None = None
-    technical_properties: dict
+    technical_properties: dict | None = None

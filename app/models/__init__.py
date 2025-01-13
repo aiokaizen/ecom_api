@@ -1,1 +1,1 @@
-from .models import TechnicalProperty, Product
+from .models import Product
