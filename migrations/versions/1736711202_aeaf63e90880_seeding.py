@@ -11,7 +11,6 @@ from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
-import sqlmodel
 
 from faslava.config.database_manager import db_manager
 
@@ -31,6 +30,17 @@ def upgrade() -> None:
     with open("seeding_data.json", "r") as f:
         product_data = json.load(f)
 
+    # Code example for the migration
+    # with engine.connect() as conn:
+    #     result = conn.execute(
+    #         insert(user_table),
+    #         [
+    #             {"name": "sandy", "fullname": "Sandy Cheeks"},
+    #             {"name": "patrick", "fullname": "Patrick Star"},
+    #         ],
+    #     )
+    #     conn.commit()
+
     with db_manager.session_scope() as session:
         for product_dict in product_data:
             print("Creating product:", product_dict["name"])
@@ -45,5 +55,5 @@ def downgrade() -> None:
 
     with db_manager.session_scope() as session:
         product_ids = [product["id"] for product in product_data]
-        statement = sqlmodel.delete(Product).where(Product.id.in_(product_ids))
+        statement = sa.delete(Product).where(Product.id.in_(product_ids))
         session.exec(statement)

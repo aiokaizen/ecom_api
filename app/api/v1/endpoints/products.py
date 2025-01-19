@@ -5,14 +5,14 @@ from faslava.core.messages import UNKNOWN_ERROR_MESSAGE
 from faslava.enums.enums import APIResponseStatusEnum
 from faslava.exceptions.exceptions import InvalidPaginationOffset
 from faslava.logging.logging_manager import logger
-from faslava.config.database_manager import db_manager
+from faslava.config.database_manager import engine
 from faslava.core.utils import gettext_lazy as _
 from faslava.serializers.api_serializers import APIResponse, generate_paginated_response
 
 from app.models import Product
 from app.serializers.product_serializers import (
     ProductCreateUpdateSerializer,
-    ProductGetSerializer,
+    ProductSerializer,
     ProductListSerializer,
 )
 from app.services.product_services import (
@@ -34,10 +34,10 @@ async def product_list_endpoint(
     offset: int = Query(default=0, ge=0),
     limit: int = Query(default=10, ge=1),
 ):
-    with db_manager.session_scope() as session:
-        products, total_count = filter_products(session, offset, limit)
+    with engine.begin() as connection:
+        products, total_count = filter_products(connection, offset, limit)
         serialized_products = [
-            ProductListSerializer(**product.model_dump()) for product in products
+            ProductListSerializer.from_orm(product) for product in products
         ]
         return ProductPaginatedResponse(
             total_count=total_count,
@@ -50,12 +50,12 @@ async def product_list_endpoint(
 @router.post("/", status_code=201, response_model=APIResponse)
 async def product_create_endpoint(product_data: ProductCreateUpdateSerializer):
     try:
-        with db_manager.session_scope() as session:
-            product = create_product(session, product_data)
+        with engine.begin() as connection:
+            product = create_product(connection, product_data)
             return APIResponse(
                 status=APIResponseStatusEnum.SUCCESS,
                 message=_("Product created successfully."),
-                obj=ProductGetSerializer(**product.model_dump()),
+                obj=ProductSerializer.from_orm(product),
             )
     except InvalidPaginationOffset as e:
         raise HTTPException(
@@ -66,12 +66,12 @@ async def product_create_endpoint(product_data: ProductCreateUpdateSerializer):
         )
 
 
-@router.get("/{product_id}", response_model=ProductGetSerializer)
-async def product_retrieve_endpoint(product_id: int):
+@router.get("/{product_id}", response_model=ProductSerializer)
+async def product_get_endpoint(product_id: int):
     try:
-        with db_manager.session_scope() as session:
-            product = get_product_with_id(session, product_id)
-            product_serializer = ProductGetSerializer(**product.model_dump())
+        with engine.begin() as connection:
+            product = get_product_with_id(connection, product_id)
+            product_serializer = ProductSerializer.from_orm(product)
             return product_serializer
     except Product.no_result_found_exc() as e:
         raise HTTPException(
@@ -102,14 +102,14 @@ async def product_update_endpoint(
     product_id: int, product_data: ProductCreateUpdateSerializer
 ):
     try:
-        with db_manager.session_scope() as session:
+        with engine.begin() as connection:
             product = update_product(
-                session, product_id=product_id, product_data=product_data
+                connection, product_id=product_id, product_data=product_data
             )
             return APIResponse(
                 status=APIResponseStatusEnum.SUCCESS,
                 message=_("Product updated successfully."),
-                obj=ProductGetSerializer(**product.model_dump()),
+                obj=ProductSerializer.from_orm(product),
             )
     except Product.no_result_found_exc() as e:
         raise HTTPException(
@@ -138,8 +138,8 @@ async def product_update_endpoint(
 )
 async def product_delete_endpoint(product_id: int):
     try:
-        with db_manager.session_scope() as session:
-            delete_product(session, product_id=product_id)
+        with engine.begin() as connection:
+            delete_product(connection, product_id=product_id)
             return APIResponse(
                 status=APIResponseStatusEnum.SUCCESS,
                 message=_("Product deleted successfully."),

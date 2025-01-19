@@ -1,6 +1,7 @@
 from typing import Sequence, Tuple
 from sqlalchemy.exc import NoResultFound
-from sqlmodel import Session, select
+from sqlalchemy import Connection, delete, insert
+from sqlalchemy.sql import select, update
 from app.models.models import Product
 from app.serializers.product_serializers import ProductCreateUpdateSerializer
 from faslava.core.filters import Filter
@@ -8,12 +9,12 @@ from faslava.exceptions.exceptions import InvalidPaginationOffset
 from faslava.logging.logging_manager import logger
 
 
-def get_product_with_id(session: Session, id: int) -> Product:
+def get_product_with_id(connection: Connection, id: int) -> Product:
     """
     Fetche a product from the datasbase using it's ID.
 
     Args:
-        session (Session): The database session
+        connection (Connection): The database connection
         product_id (int): The product id used to fetch the database.
 
     Returns:
@@ -25,39 +26,44 @@ def get_product_with_id(session: Session, id: int) -> Product:
     try:
         logger.info(f"Select product with ID: {id}")
         statement = select(Product).where(Product.id == id)
-        result = session.exec(statement)
+        result = connection.execute(statement)
         product = result.one()
         return product
     except NoResultFound:
         raise Product.no_result_found_exc()
 
 
-def create_product(session: Session, product_data: ProductCreateUpdateSerializer):
+def create_product(connection: Connection, product_data: ProductCreateUpdateSerializer):
     """
     Create a new product in the datasbase.
 
     Args:
-        session (Session): The database session
+        connection (Connection): The database connection
         product_data (ProductCreateUpdateSerializer): The product data to insert into the database.
 
     Returns:
         Product: The newly created product.
     """
-    logger.info(f"Insert product: {product_data}")
-    product = Product(**product_data.model_dump())
-    session.add(product)
-    session.flush()
+    logger.info(f"Create product: {product_data}")
+    stmt = insert(Product).values(**product_data.model_dump()).returning(Product)
+    result = connection.execute(stmt)
+    product = result.one()
+    # NOTE: Primary key might be composed of multiple columns
+    # pk = result.inserted_primary_key[0]
     return product
 
 
 def update_product(
-    session: Session, *, product_id: int, product_data: ProductCreateUpdateSerializer
+    connection: Connection,
+    *,
+    product_id: int,
+    product_data: ProductCreateUpdateSerializer,
 ):
     """
     Update a product in the datasbase.
 
     Args:
-        session (Session): The database session
+        connection (Connection): The database connection
         product_id (int): The product id that should be updated in the database.
         product_data (ProductCreateUpdateSerializer): The product data to update in the database.
 
@@ -69,27 +75,26 @@ def update_product(
     """
     try:
         logger.info(f"Update product {product_id} with data: {product_data}")
-        product = Product(**product_data.model_dump())
-        statement = select(Product).where(Product.id == product_id)
-        result = session.exec(statement)
+        product_dict = product_data.model_dump()
+        stmt = (
+            update(Product)
+            .where(Product.id == product_id)
+            .values(**product_dict)
+            .returning(Product)
+        )
+        result = connection.execute(stmt)
         product = result.one()
-
-        for name, value in product_data.model_dump().items():
-            setattr(product, name, value)
-
-        session.add(product)
-        session.flush()
         return product
     except NoResultFound:
         raise Product.no_result_found_exc()
 
 
-def delete_product(session: Session, *, product_id: int):
+def delete_product(connection: Connection, *, product_id: int):
     """
     Delete a product from the datasbase.
 
     Args:
-        session (Session): The database session
+        connection (Connection): The database connection
         product_id (int): The product id that should be deleted from the database.
 
     Raises:
@@ -97,17 +102,14 @@ def delete_product(session: Session, *, product_id: int):
     """
     try:
         logger.info(f"Delete product {product_id}.")
-        statement = select(Product).where(Product.id == product_id)
-        result = session.exec(statement)
-        product = result.one()
-        session.delete(product)
-        session.flush()
+        statement = delete(Product).where(Product.id == product_id)
+        connection.execute(statement)
     except NoResultFound:
         raise Product.no_result_found_exc()
 
 
 def filter_products(
-    session: Session,
+    connection: Connection,
     offset: int = 0,
     limit: int = 10,
     filters: Filter | None = None,
@@ -116,7 +118,7 @@ def filter_products(
     Filters product using the filters provided, while limiting the results using limit and offset.
 
     Args:
-        session (Session): The database session.
+        connection (Connection): The database connection.
         offset (int): The offset to skip before returning results.
         limit (int): The max amount of results to return
         filters (Optional[Filter]): Filter object defining how results should be filtered
@@ -127,10 +129,10 @@ def filter_products(
     Returns:
         A tuple containing the list of products alongside the total number of products in the database.
     """
-    logger.info(f"Filter products with the following filters: {filters}")
+    logger.info(f"Filter products using the following filters: {filters}")
 
     # Change this method, get the length from db.
-    total_items = len(session.exec(select(Product)).all())
+    total_items = len(connection.execute(select(Product)).all())
 
     statement = (
         select(Product)
@@ -138,7 +140,7 @@ def filter_products(
         .offset(offset)
         .limit(limit)
     )
-    result = session.exec(statement)
+    result = connection.execute(statement)
     products = result.all()
 
     if not products and offset > 0:

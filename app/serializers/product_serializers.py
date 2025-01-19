@@ -1,13 +1,10 @@
-from faslava.serializers.serializers import BaseSerializer
+from faslava.serializers.serializers import (
+    BaseCreateUpdateSerializer,
+    BaseORMSerializer,
+)
 
 
-class ProductListSerializer(BaseSerializer):
-    id: int
-    name: str
-    price: float
-
-
-class ProductGetSerializer(BaseSerializer):
+class ProductSerializer(BaseORMSerializer):
     id: int
     name: str
     price: float
@@ -15,7 +12,13 @@ class ProductGetSerializer(BaseSerializer):
     technical_properties: dict
 
 
-class ProductCreateUpdateSerializer(BaseSerializer):
+class ProductListSerializer(BaseORMSerializer):
+    id: int
+    name: str
+    price: float
+
+
+class ProductCreateUpdateSerializer(BaseCreateUpdateSerializer):
     name: str
     price: float
     description: str | None = None
