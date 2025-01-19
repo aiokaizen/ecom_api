@@ -89,7 +89,7 @@ def update_product(
         raise Product.no_result_found_exc()
 
 
-def delete_product(connection: Connection, *, product_id: int):
+def delete_product(connection: Connection, *, product_id: int) -> int:
     """
     Delete a product from the datasbase.
 
@@ -102,8 +102,10 @@ def delete_product(connection: Connection, *, product_id: int):
     """
     try:
         logger.info(f"Delete product {product_id}.")
-        statement = delete(Product).where(Product.id == product_id)
-        connection.execute(statement)
+        statement = delete(Product).where(Product.id == product_id).returning(Product)
+        result = connection.execute(statement)
+        product = result.one()
+        return product.id
     except NoResultFound:
         raise Product.no_result_found_exc()
 
