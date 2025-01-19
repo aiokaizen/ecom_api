@@ -11,7 +11,7 @@ class APIResponse(BaseSerializer):
     obj: Any = None
 
 
-def generate_paginated_response(serializer: Type):
+def generate_paginated_response(serializer: Type[BaseSerializer]):
     """
     Generates a paginated response class dedicated for the provided serializer and returs it.
 
@@ -27,6 +27,8 @@ def generate_paginated_response(serializer: Type):
 
     class DedicatedPaginatedResponse(BaseSerializer):
         total_count: int
+        offset: int
+        limit: int
         results: List[serializer]
 
     return DedicatedPaginatedResponse

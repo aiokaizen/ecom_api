@@ -5,7 +5,6 @@ class ProductListSerializer(BaseSerializer):
     id: int
     name: str
     price: float
-    description: str | None = None
 
 
 class ProductGetSerializer(BaseSerializer):
@@ -16,7 +15,7 @@ class ProductGetSerializer(BaseSerializer):
     technical_properties: dict
 
 
-class ProductCreateSerializer(BaseSerializer):
+class ProductCreateUpdateSerializer(BaseSerializer):
     name: str
     price: float
     description: str | None = None

@@ -17,13 +17,21 @@ class Product(BaseModel, table=True):
     __table_args__ = {"schema": settings.ALEMBIC_CUSTOM_SCHEMA}
     __display_name__ = "Product"
 
-    id: Optional[int] = Field(primary_key=True, description=_("ID"))
+    id: int = Field(primary_key=True, description=_("ID"))
     name: str = Field(max_length=256, description=_("Name"))
     price: Decimal = Field(decimal_places=2, max_digits=11, description=_("Price"))
     description: Optional[str] = Field(default="", description=_("Description"))
     technical_properties: Optional[dict] = Field(
         default=None, sa_column=Column(JSON, nullable=True)
     )
+
+
+# class Category(BaseModel, table=True):
+#     pass
+
+
+# class Tag(BaseModel, table=True):
+#     pass
 
 
 # class Order(BaseModel, table=True):

@@ -9,5 +9,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             response = await call_next(request)
             return response
         except Exception as e:
-            logger.critical(f"AN UNKNOWN EXCEPTION WAS RAISE IN THE APPLICATION: {e}")
+            logger.critical(
+                f"AN UNKNOWN EXCEPTION WAS ENCOUNTERED IN THE APPLICATION: {e}"
+            )
             raise e

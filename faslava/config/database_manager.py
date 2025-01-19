@@ -36,11 +36,8 @@ class DatabaseManager:
         """
         session = Session(self.engine)
         try:
-            print("\n\nYielding a session....")
             yield session
-            print("\n\nSession exited.")
             session.commit()
-            print("\n\nSession comitted.")
         except Exception as e:
             session.rollback()
             raise e
