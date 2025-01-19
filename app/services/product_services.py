@@ -1,4 +1,5 @@
 from typing import Sequence, Tuple
+from sqlalchemy.exc import NoResultFound
 from sqlalchemy.sql import and_
 from sqlmodel import Session, select
 from app.models.models import Product
@@ -21,10 +22,13 @@ def create_product(product: Product):
 
 
 def get_product_with_id(session: Session, id: int) -> Product:
-    logger.info(f"Select product with ID: {id}")
-    statement = select(Product).where(Product.id == id)
-    product = session.exec(statement).one()
-    return product
+    try:
+        logger.info(f"Select product with ID: {id}")
+        statement = select(Product).where(Product.id == id)
+        product = session.exec(statement).one()
+        return product
+    except NoResultFound:
+        raise Product.no_result_found_exc()
 
 
 def filter_products(

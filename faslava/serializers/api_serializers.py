@@ -8,7 +8,7 @@ class APIResponse(BaseSerializer):
 
     status: APIResponseStatusEnum
     message: str
-    obj: Any
+    obj: Any = None
 
 
 def generate_paginated_response(serializer: Type):

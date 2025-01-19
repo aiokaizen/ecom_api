@@ -15,6 +15,7 @@ class Product(BaseModel, table=True):
 
     __tablename__ = "product"
     __table_args__ = {"schema": settings.ALEMBIC_CUSTOM_SCHEMA}
+    __display_name__ = "Product"
 
     id: Optional[int] = Field(primary_key=True, description=_("ID"))
     name: str = Field(max_length=256, description=_("Name"))

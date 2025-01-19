@@ -1,9 +1,11 @@
-from fastapi import Query
+from fastapi import HTTPException, Query, status as http_status
 from fastapi.routing import APIRouter
 
-from app.serializers import product_serializers
+from faslava.enums.enums import APIResponseStatusEnum
 from faslava.logging.logging_manager import logger
 from faslava.config.database_manager import db_manager
+from faslava.core.utils import gettext_lazy as _
+from faslava.serializers.api_serializers import APIResponse, generate_paginated_response
 
 from app.models import Product
 from app.serializers.product_serializers import (
@@ -11,7 +13,6 @@ from app.serializers.product_serializers import (
     ProductListSerializer,
 )
 from app.services.product_services import filter_products, get_product_with_id
-from faslava.serializers.api_serializers import generate_paginated_response
 
 
 router = APIRouter()
@@ -46,6 +47,14 @@ async def read_product(product_id: int):
             product = get_product_with_id(session, product_id)
             product_serializer = ProductGetSerializer(**product.model_dump())
             return product_serializer
+    except Product.no_result_found_exc() as e:
+        raise HTTPException(
+            status_code=e.http_error_code,
+            detail=APIResponse(
+                status=APIResponseStatusEnum.ERROR,
+                message=e.message,
+            ).model_dump(),
+        )
     except Exception as e:
         logger.error("Unexpected error:", e)
         raise e
