@@ -1,5 +1,6 @@
 import os
 import logging
+import colorlog
 from logging import StreamHandler
 from logging.handlers import RotatingFileHandler
 from typing import Dict
@@ -28,10 +29,22 @@ class LoggingManager:
 
     def add_console_handler(self, level: int = logging.INFO):
         """Add a console (stdout) logging handler."""
+        log_format = (
+            "%(log_color)s%(asctime)s %(levelname)s%(reset)s %(name)s %(message)s"
+        )
+        color_formatter = colorlog.ColoredFormatter(
+            log_format,
+            log_colors={
+                "DEBUG": "cyan",
+                "INFO": "green",
+                "WARNING": "yellow",
+                "ERROR": "red",
+                "CRITICAL": "bold_red",
+            },
+        )
         handler = StreamHandler()
+        handler.setFormatter(color_formatter)
         handler.setLevel(level)
-        formatter = logging.Formatter("%(asctime)s %(levelname)s %(name)s %(message)s")
-        handler.setFormatter(formatter)
         self.logger.addHandler(handler)
         self.handlers["console"] = handler
 
