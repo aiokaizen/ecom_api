@@ -6,8 +6,8 @@ from sqlalchemy import pool
 from alembic import context
 
 from faslava.config.configuration import settings
-from app.models import *
 from faslava.models.base_models import BaseModel
+from app.models import *
 
 # this is the Alembic Config object, which provides
 # access to the values within the alembic.ini file in use.

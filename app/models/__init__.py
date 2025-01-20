@@ -1,1 +1,1 @@
-from .models import Product
+from .product_models import ProductCategoryAssociation, Product, Category

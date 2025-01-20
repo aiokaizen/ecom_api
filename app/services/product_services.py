@@ -2,7 +2,7 @@ from typing import Sequence, Tuple
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy import Connection, delete, insert
 from sqlalchemy.sql import select, update
-from app.models.models import Product
+from app.models.product_models import Product
 from app.serializers.product_serializers import ProductCreateUpdateSerializer
 from faslava.core.filters import Filter
 from faslava.exceptions.exceptions import InvalidPaginationOffset

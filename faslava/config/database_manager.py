@@ -1,8 +1,9 @@
 from threading import Lock
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event, text
 
 from faslava.config.configuration import settings
+from faslava.logging import logger
 
 
 class DatabaseManager:
@@ -28,10 +29,15 @@ class DatabaseManager:
     def get_engine(self):
         return self._engine
 
-    # def create_tables(self):
-    #     # Create all tables defined by SQLModel
-    #     SQLModel.metadata.create_all(self.engine)
-
 
 _db_manager = DatabaseManager(database_url=settings.build_db_url())
 engine = _db_manager.get_engine()
+
+
+@event.listens_for(engine, "engine_connect")
+def set_search_path(connection, branch):
+    logger.info(f"Changing search path to: {settings.ALEMBIC_CUSTOM_SCHEMA}")
+    change_schema_query = text(f'SET search_path TO "{settings.ALEMBIC_CUSTOM_SCHEMA}"')
+    connection.execute(change_schema_query)
+    connection.commit()
+    logger.info("Search path is set successfully.")

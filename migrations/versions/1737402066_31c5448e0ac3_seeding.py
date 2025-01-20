@@ -15,7 +15,7 @@ from sqlalchemy.sql import insert
 
 from faslava.config.database_manager import engine
 
-from app.models.models import Product
+from app.models.product_models import Product
 
 
 # revision identifiers, used by Alembic.
@@ -31,9 +31,8 @@ def upgrade() -> None:
         product_data = json.load(f)
 
     # Code example for the migration
-    print("Product data:", product_data)
     with engine.begin() as conn:
-        result = conn.execute(insert(Product), product_data)
+        conn.execute(insert(Product), product_data)
 
 
 def downgrade() -> None:
@@ -43,6 +42,5 @@ def downgrade() -> None:
         product_ids = [product["id"] for product in product_data]
 
     # Code example for the migration
-    print("Product data:", product_data)
     with engine.begin() as conn:
-        result = conn.execute(sa.delete(Product).where(Product.id.in_(product_ids)))
+        conn.execute(sa.delete(Product).where(Product.id.in_(product_ids)))
