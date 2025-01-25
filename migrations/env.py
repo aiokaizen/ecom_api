@@ -7,11 +7,13 @@ from alembic import context
 
 from faslava.config.configuration import settings
 from faslava.models.base_models import BaseModel
+from faslava.models import *
 from app.models import *
 
 # this is the Alembic Config object, which provides
 # access to the values within the alembic.ini file in use.
 config = context.config
+default_schema = settings.CUSTOM_SCHEMA
 
 db_url = settings.build_db_url()
 config.set_main_option("sqlalchemy.url", db_url)
@@ -21,11 +23,20 @@ config.set_main_option("sqlalchemy.url", db_url)
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# add your model's MetaData object here
-# for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
 target_metadata = BaseModel.metadata
+
+
+def change_default_schema(schema: str):
+    print("Changing models schema to:", schema)
+    if not schema:
+        return
+
+    for table in target_metadata.tables.values():
+        print("Table:", table, table.schema)
+        if not table.schema:
+            table.schema = schema
+            print("Schema changed:", table)
+
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -34,10 +45,13 @@ target_metadata = BaseModel.metadata
 
 
 def include_name(name, type_, parent_names):
-    if type_ == "schema" and name == settings.ALEMBIC_CUSTOM_SCHEMA:
+    if not settings.CUSTOM_SCHEMA:
         return True
 
-    if parent_names.get("schema_name") == settings.ALEMBIC_CUSTOM_SCHEMA:
+    if type_ == "schema" and name == settings.CUSTOM_SCHEMA:
+        return True
+
+    if parent_names.get("schema_name") == settings.CUSTOM_SCHEMA:
         return True
 
     return False
@@ -74,6 +88,11 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
+    x_arg = context.get_x_argument(as_dictionary=True)
+    session_schema = x_arg.get("schema", default_schema)
+    if session_schema:
+        change_default_schema(session_schema)
+
     connectable = engine_from_config(
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",

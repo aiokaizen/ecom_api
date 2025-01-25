@@ -4,7 +4,7 @@
     "name": "UltraBook Pro 15",
     "price": 1200,
     "description": "A sleek ultrabook with excellent performance for professionals.",
-    "technical_properties": {
+    "custom_properties": {
       "CPU": "Intel Core i7-1255U",
       "RAM": "16GB DDR4",
       "GPU": "Intel Iris Xe",
@@ -18,7 +18,7 @@
     "name": "Gaming Laptop X15",
     "price": 1500,
     "description": "High-performance gaming laptop with advanced cooling system.",
-    "technical_properties": {
+    "custom_properties": {
       "CPU": "AMD Ryzen 7 5800H",
       "RAM": "16GB DDR4",
       "GPU": "NVIDIA RTX 3060",
@@ -32,7 +32,7 @@
     "name": "Smartphone Z20",
     "price": 700,
     "description": "Compact smartphone with excellent camera and performance.",
-    "technical_properties": {
+    "custom_properties": {
       "CPU": "Snapdragon 888",
       "RAM": "8GB",
       "Storage": "128GB",
@@ -46,7 +46,7 @@
     "name": "Smartwatch Fit X",
     "price": 250,
     "description": "Fitness-focused smartwatch with long battery life.",
-    "technical_properties": {
+    "custom_properties": {
       "Screen Size": "1.4 inches",
       "Battery Life": "7 days",
       "Sensors": "Heart Rate, SpO2, GPS",
@@ -58,7 +58,7 @@
     "name": "Wireless Earbuds S1",
     "price": 100,
     "description": "Compact and high-quality wireless earbuds with noise cancellation.",
-    "technical_properties": {
+    "custom_properties": {
       "Battery Life": "5 hours (20 hours with case)",
       "Noise Cancellation": "Active",
       "Bluetooth": "5.2",
@@ -70,7 +70,7 @@
     "name": "4K Smart TV 55",
     "price": 600,
     "description": "55-inch 4K Smart TV with vibrant colors and streaming support.",
-    "technical_properties": {
+    "custom_properties": {
       "Screen Size": "55 inches",
       "Resolution": "4K UHD",
       "HDR": "HDR10+",
@@ -83,7 +83,7 @@
     "name": "Bluetooth Speaker Boom X",
     "price": 80,
     "description": "Portable Bluetooth speaker with powerful bass.",
-    "technical_properties": {
+    "custom_properties": {
       "Battery Life": "10 hours",
       "Bluetooth": "5.0",
       "Water Resistance": "IP67",
@@ -95,7 +95,7 @@
     "name": "External SSD Pro 1TB",
     "price": 150,
     "description": "High-speed portable SSD with durable design.",
-    "technical_properties": {
+    "custom_properties": {
       "Storage": "1TB",
       "Read Speed": "1050MB/s",
       "Write Speed": "1000MB/s",
@@ -108,7 +108,7 @@
     "name": "Mechanical Keyboard K100",
     "price": 120,
     "description": "Customizable mechanical keyboard with RGB lighting.",
-    "technical_properties": {
+    "custom_properties": {
       "Switch Type": "Cherry MX Red",
       "Keycaps": "PBT Double-shot",
       "Connectivity": "Wired USB",
@@ -121,7 +121,7 @@
     "name": "Gaming Mouse G10",
     "price": 50,
     "description": "Ergonomic gaming mouse with adjustable DPI settings.",
-    "technical_properties": {
+    "custom_properties": {
       "DPI Range": "400-12000",
       "Buttons": "6 programmable",
       "Connectivity": "Wired USB",

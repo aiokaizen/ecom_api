@@ -9,7 +9,7 @@ class ProductSerializer(BaseORMSerializer):
     name: str
     price: float
     description: str | None = None
-    technical_properties: dict
+    custom_properties: dict
 
 
 class ProductListSerializer(BaseORMSerializer):
@@ -22,4 +22,4 @@ class ProductCreateUpdateSerializer(BaseCreateUpdateSerializer):
     name: str
     price: float
     description: str | None = None
-    technical_properties: dict | None = None
+    custom_properties: dict | None = None

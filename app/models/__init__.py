@@ -1,1 +1,9 @@
-from .product_models import ProductCategoryAssociation, Product, Category
+from .product_models import (
+    Product,
+    Category,
+    CategoryProductAssociation,
+    Tag,
+    Order,
+    OrderProductAssociation,
+    Customer,
+)

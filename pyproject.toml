@@ -20,6 +20,9 @@ fastapi-contrib = "^0.2.11"
 python-jose = "^3.3.0"
 passlib = "^1.7.4"
 toml = "^0.10.2"
+faker = "^35.0.0"
+typer = "^0.15.1"
+python-slugify = "^8.0.4"
 
 
 [tool.poetry.group.dev.dependencies]

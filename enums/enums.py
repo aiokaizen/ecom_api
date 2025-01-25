@@ -1,33 +1,10 @@
 from enum import Enum
 
 
-class TechnicalPropertyEnum(str, Enum):
-    CPU = "CPU"
-    RAM = "RAM"
-    GPU = "GPU"
-    Storage = "Storage"
-    ScreenSize = "Screen Size"
-    Resolution = "Resolution"
-    BatteryLife = "Battery Life"
-    WaterResistance = "Water Resistance"
-    Bluetooth = "Bluetooth"
-    Weight = "Weight"
-    Battery = "Battery"
-    RefreshRate = "Refresh Rate"
-    Camera = "Camera"
-    Sensors = "Sensors"
-    NoiseCancellation = "Noise Cancellation"
-    HDR = "HDR"
-    Ports = "Ports"
-    SmartFeatures = "Smart Features"
-    OutputPower = "Output Power"
-    ReadSpeed = "Read Speed"
-    WriteSpeed = "Write Speed"
-    Interface = "Interface"
-    SwitchType = "Switch Type"
-    Keycaps = "Keycaps"
-    Connectivity = "Connectivity"
-    Lighting = "Lighting"
-    Layout = "Layout"
-    DPIRange = "DPI Range"
-    Buttons = "Buttons"
+class OrderTypeEnum(str, Enum):
+    ORDER = "ORDER"
+
+
+class GenderEnum(str, Enum):
+    FEMALE = "F"
+    MALE = "M"

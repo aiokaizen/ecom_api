@@ -36,8 +36,11 @@ engine = _db_manager.get_engine()
 
 @event.listens_for(engine, "engine_connect")
 def set_search_path(connection, branch):
-    logger.info(f"Changing search path to: {settings.ALEMBIC_CUSTOM_SCHEMA}")
-    change_schema_query = text(f'SET search_path TO "{settings.ALEMBIC_CUSTOM_SCHEMA}"')
+    if not settings.CUSTOM_SCHEMA:
+        return
+
+    logger.info(f"Changing search path to: {settings.CUSTOM_SCHEMA}")
+    change_schema_query = text(f'SET search_path TO "{settings.CUSTOM_SCHEMA}"')
     connection.execute(change_schema_query)
     connection.commit()
     logger.info("Search path is set successfully.")

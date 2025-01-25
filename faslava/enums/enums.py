@@ -20,3 +20,8 @@ class APIResponseStatusEnum(str, Enum):
     SUCCESS = "success"
     WARNING = "warning"
     ERROR = "error"
+
+
+class GenderEnum(str, Enum):
+    FEMALE = "F"
+    MALE = "M"

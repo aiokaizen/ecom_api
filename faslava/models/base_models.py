@@ -5,6 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
 from sqlalchemy.sql import text
 from sqlalchemy.types import DateTime
 
+from faslava.config.configuration import settings
 from faslava.core.utils import gettext_lazy as _
 from faslava.exceptions.exceptions import BaseException
 
@@ -13,6 +14,7 @@ class BaseModel(DeclarativeBase):
     """BaseModel for all the database classes."""
 
     __exception__ = None
+    __table_args__ = {"schema": settings.CUSTOM_SCHEMA}
 
     id: Mapped[int] = mapped_column(primary_key=True)
     created_at: Mapped[datetime] = mapped_column(

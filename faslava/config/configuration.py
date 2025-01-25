@@ -42,7 +42,8 @@ class Settings(BaseSettings):
     DB_PORT: int = 0
     DB_ENGINE: str
     ALLOWED_HOSTS: str = "*"
-    ALEMBIC_CUSTOM_SCHEMA: str = "almbc"
+    # Defaults to public if None
+    CUSTOM_SCHEMA: Optional[str] = None
 
     def serialize_allowed_hosts(self, value: Optional[str] = None):
         if value is None:
