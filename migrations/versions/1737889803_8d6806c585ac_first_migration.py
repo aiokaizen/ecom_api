@@ -1,8 +1,8 @@
 """First migration
 
-Revision ID: 9885a15f76f9
+Revision ID: 8d6806c585ac
 Revises: 
-Create Date: 2025-01-25 15:02:53.116615
+Create Date: 2025-01-26 12:10:03.727253
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '9885a15f76f9'
+revision: str = '8d6806c585ac'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -36,6 +36,7 @@ def upgrade() -> None:
     sa.Column('custom_properties', sa.JSON(), nullable=True),
     sa.Column('tags', sa.JSON(), nullable=True),
     sa.Column('sku', sa.String(length=16), nullable=True),
+    sa.Column('brand', sa.String(length=64), nullable=True),
     sa.Column('manufacturer', sa.String(length=256), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
@@ -51,6 +52,7 @@ def upgrade() -> None:
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('deleted_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name'),
     schema='almbc'
     )
     op.create_table('user_account',
@@ -97,12 +99,6 @@ def upgrade() -> None:
     )
     op.create_table('customer',
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('first_name', sa.String(length=64), nullable=False),
-    sa.Column('last_name', sa.String(length=64), nullable=False),
-    sa.Column('full_name', sa.String(length=64), nullable=True),
-    sa.Column('gender', sa.String(length=1), nullable=False),
-    sa.Column('image_url', sa.String(length=512), nullable=True),
-    sa.Column('geoip', sa.JSON(none_as_null=True), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
@@ -119,9 +115,9 @@ def upgrade() -> None:
     sa.Column('discount', sa.Double(precision=2), nullable=False),
     sa.Column('tax', sa.Double(precision=2), nullable=False),
     sa.Column('total_quantity', sa.Double(precision=2), nullable=False),
-    sa.Column('products_count', sa.Double(precision=2), nullable=False),
+    sa.Column('products_count', sa.Integer(), nullable=True),
     sa.Column('customer_id', sa.Integer(), nullable=False),
-    sa.Column('trigger_event', sa.JSON(none_as_null=True), nullable=False),
+    sa.Column('trigger_event', sa.JSON(none_as_null=True), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
@@ -133,8 +129,9 @@ def upgrade() -> None:
     op.create_table('order_product_association',
     sa.Column('product_id', sa.Integer(), nullable=False),
     sa.Column('order_id', sa.Integer(), nullable=False),
-    sa.Column('total_price', sa.Double(precision=2), nullable=False),
-    sa.Column('discount', sa.Double(precision=2), nullable=False),
+    sa.Column('sell_price', sa.Double(precision=2), nullable=False),
+    sa.Column('discount', sa.Double(precision=2), nullable=True),
+    sa.Column('tax', sa.Double(precision=2), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),

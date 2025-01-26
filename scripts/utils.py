@@ -8,6 +8,23 @@ from faslava.logging import logger
 from scripts.seed_data import AVAILABLE_PROPERTIES_CONFIGURATION
 
 
+_discount_choices = [
+    *[0 for _ in range(20)],
+    *[10 for _ in range(15)],
+    *[15 for _ in range(10)],
+    *[20 for _ in range(5)],
+    *[25 for _ in range(2)],
+    50,
+]
+
+_tax_choices = [
+    *[0 for _ in range(20)],
+    *[20 for _ in range(10)],
+    *[14 for _ in range(5)],
+    *[7 for _ in range(2)],
+]
+
+
 def get_product_data():
     with open("seeding_data.json", "r") as f:
         return json.load(f)
@@ -18,6 +35,20 @@ def generate_price():
     price = round(random.random() * random.choice(multiples), 2)
     logger.debug(f"Generating price: {price}")
     return price
+
+
+def generate_discount():
+    return random.choice(_discount_choices)
+
+
+def generate_tax():
+    return random.choice(_tax_choices)
+
+
+def generate_phone_number(fake: Faker):
+    country_calling_code = fake.country_calling_code().split(" ")[0]
+    phone_number = f"{random.randint(5, 8)}{fake.numerify('## ## ## ##')}"
+    return f"({country_calling_code}) {phone_number}"
 
 
 def generate_random_properties(fake: Faker, min: int = 0, max: int = 5):
