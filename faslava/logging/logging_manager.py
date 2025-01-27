@@ -29,9 +29,8 @@ class LoggingManager:
 
     def add_console_handler(self, level: int = logging.INFO):
         """Add a console (stdout) logging handler."""
-        log_format = (
-            "%(log_color)s%(asctime)s %(levelname)s%(reset)s %(name)s %(message)s"
-        )
+        log_format = "%(log_color)s%(asctime)s %(levelname)s%(reset)s %(message_log_color)s%(name)s%(reset)s %(message)s"
+
         color_formatter = colorlog.ColoredFormatter(
             log_format,
             log_colors={
@@ -39,7 +38,16 @@ class LoggingManager:
                 "INFO": "green",
                 "WARNING": "yellow",
                 "ERROR": "red",
-                "CRITICAL": "bold_red",
+                "CRITICAL": "red,bg_white",
+            },
+            secondary_log_colors={
+                "message": {
+                    "DEBUG": "light_black",
+                    "INFO": "light_black",
+                    "WARNING": "light_black",
+                    "ERROR": "light_black",
+                    "CRITICAL": "light_black",
+                },
             },
         )
         handler = StreamHandler()

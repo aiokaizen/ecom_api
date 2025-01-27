@@ -23,6 +23,7 @@ toml = "^0.10.2"
 faker = "^35.0.0"
 typer = "^0.15.1"
 python-slugify = "^8.0.4"
+python-multipart = "^0.0.20"
 
 
 [tool.poetry.group.dev.dependencies]
